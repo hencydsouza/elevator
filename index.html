@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            padding: 10px;
+            font-family: sans-serif;
+        }
+
+        .main-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .floor {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .elevator-button-container {
+            display: flex;
+            flex-direction: column;
+            /* margin: 0 40px; */
+            align-items: center;
+            width: 100px;
+            gap: 4px;
+        }
+
+        button {
+            width: 30px;
+            height: 30px;
+        }
+
+        .left-elevator,
+        .right-elevator {
+            width: 80px;
+            height: 100px;
+            /* background-color: black; */
+        }
+
+        .elevator-background {
+            background-color: black;
+        }
+
+        .elevator-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .left-elevator-request-list {
+            width: 100px;
+            text-align: right;
+        }
+
+        .right-elevator-request-list {
+            width: 100px;
+        }
+
+        button {
+            border: 1px solid black;
+        }
+
+        .button-green-bg {
+            background-color: green;
+        }
+
+        .elevator-controller {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .right-elevator-controller,
+        .left-elevator-controller {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-container">
+        <div class="floor">
+            <div class="elevator-container">
+                <div class="left-elevator-request-list"></div>
+                <div class="left-elevator"></div>
+            </div>
+            <div class="elevator-button-container">
+                <p class="floor-text">5th Floor</p>
+                <button class="up-button" onclick="requestElevator(this)" id="5-up" style="display: none;">⬆️</button>
+                <button class="down-button" onclick="requestElevator(this)" id="5-down">⬇️</button>
+            </div>
+            <div class="elevator-container">
+                <div class="right-elevator"></div>
+                <div class="right-elevator-request-list"></div>
+            </div>
+        </div>
+        <div class="floor">
+            <div class="elevator-container">
+                <div class="left-elevator-request-list"></div>
+                <div class="left-elevator"></div>
+            </div>
+            <div class="elevator-button-container">
+                <p class="floor-text">4th Floor</p>
+                <button class="up-button" onclick="requestElevator(this)" id="4-up">⬆️</button>
+                <button class="down-button" onclick="requestElevator(this)" id="4-down">⬇️</button>
+            </div>
+            <div class="elevator-container">
+                <div class="right-elevator"></div>
+                <div class="right-elevator-request-list"></div>
+            </div>
+        </div>
+        <div class="floor">
+            <div class="elevator-container">
+                <div class="left-elevator-request-list"></div>
+                <div class="left-elevator"></div>
+            </div>
+            <div class="elevator-button-container">
+                <p class="floor-text">3rd Floor</p>
+                <button class="up-button" onclick="requestElevator(this)" id="3-up">⬆️</button>
+                <button class="down-button" onclick="requestElevator(this)" id="3-down">⬇️</button>
+            </div>
+            <div class="elevator-container">
+                <div class="right-elevator"></div>
+                <div class="right-elevator-request-list"></div>
+            </div>
+        </div>
+        <div class="floor">
+            <div class="elevator-container">
+                <div class="left-elevator-request-list"></div>
+                <div class="left-elevator"></div>
+            </div>
+            <div class="elevator-button-container">
+                <p class="floor-text">2nd Floor</p>
+                <button class="up-button" onclick="requestElevator(this)" id="2-up">⬆️</button>
+                <button class="down-button" onclick="requestElevator(this)" id="2-down">⬇️</button>
+            </div>
+            <div class="elevator-container">
+                <div class="right-elevator"></div>
+                <div class="right-elevator-request-list"></div>
+            </div>
+        </div>
+        <div class="floor">
+            <div class="elevator-container">
+                <div class="left-elevator-request-list"></div>
+                <div class="left-elevator"></div>
+            </div>
+            <div class="elevator-button-container">
+                <p class="floor-text">1st Floor</p>
+                <button class="up-button" onclick="requestElevator(this)" id="1-up">⬆️</button>
+                <button class="down-button" onclick="requestElevator(this)" id="1-down">⬇️</button>
+            </div>
+            <div class="elevator-container">
+                <div class="right-elevator"></div>
+                <div class="right-elevator-request-list"></div>
+            </div>
+        </div>
+        <div class="floor">
+            <div class="elevator-container">
+                <div class="left-elevator-request-list"></div>
+                <div class="left-elevator"></div>
+            </div>
+            <div class="elevator-button-container">
+                <p class="floor-text">0th Floor</p>
+                <button class="up-button" onclick="requestElevator(this)" id="0-up">⬆️</button>
+                <button class="down-button" onclick="requestElevator(this)" id="0-down"
+                    style="display: none;">⬇️</button>
+            </div>
+            <div class="elevator-container">
+                <div class="right-elevator"></div>
+                <div class="right-elevator-request-list"></div>
+            </div>
+        </div>
+        <div class="elevator-controller">
+            <div class="left-elevator-controller">
+                <div>
+                    <button onclick="pressFloorButton(0,0)">0</button>
+                    <button onclick="pressFloorButton(0,1)">1</button>
+                    <button onclick="pressFloorButton(0,2)">2</button>
+                    <button onclick="pressFloorButton(0,3)">3</button>
+                    <button onclick="pressFloorButton(0,4)">4</button>
+                    <button onclick="pressFloorButton(0,5)">5</button>
+                </div>
+                <p class="left-elevator-controller-text">0</p>
+            </div>
+            <div class="right-elevator-controller">
+                <p class="right-elevator-controller-text">0</p>
+                <div>
+                    <button onclick="pressFloorButton(1,0)">0</button>
+                    <button onclick="pressFloorButton(1,1)">1</button>
+                    <button onclick="pressFloorButton(1,2)">2</button>
+                    <button onclick="pressFloorButton(1,3)">3</button>
+                    <button onclick="pressFloorButton(1,4)">4</button>
+                    <button onclick="pressFloorButton(1,5)">5</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class Elevator {
+            constructor(id) {
+                this.id = id;
+                this.currentFloor = 0;
+                this.direction = 'idle';
+                this.status = 'idle';
+                this.upList = [];
+                this.downList = [];
+            }
+
+            addRequest(floor, direction) {
+                if (this.direction === 'idle') {
+                    if (this.currentFloor < floor) {
+                        if (this.upList.indexOf(floor) == -1)
+                            this.upList.push(floor)
+                        this.upList.sort((a, b) => a - b)
+                    } else {
+                        if (this.downList.indexOf(floor) == -1)
+                            this.downList.push(floor);
+                        this.downList.sort((a, b) => b - a)
+                    }
+                } else if (direction === 'up') {
+                    if (this.upList.indexOf(floor) == -1)
+                        this.upList.push(floor)
+                    this.upList.sort((a, b) => a - b)
+                } else if (direction == 'down') {
+                    if (this.downList.indexOf(floor) == -1)
+                        this.downList.push(floor);
+                    this.downList.sort((a, b) => b - a)
+                }
+            }
+
+            updateStatus() {
+                if (this.upList.length === 0 && this.downList.length === 0) {
+                    this.status = 'idle';
+                    this.direction = 'idle';
+                } else if (this.direction === 'idle' && this.status === 'idle') {
+                    if (this.upList.length > 0) {
+                        this.direction = 'up';
+                        this.status = 'moving';
+                    } else if (this.downList.length > 0) {
+                        this.direction = 'down';
+                        this.status = 'moving';
+                    }
+                }
+            }
+
+            move() {
+                this.updateStatus()
+                if (this.status === 'moving') {
+                    if (this.direction === 'up') {
+                        const nextFloor = this.upList[0];
+                        if (this.currentFloor < nextFloor) {
+                            this.currentFloor++;
+                        }
+
+                        if (this.currentFloor === nextFloor) {
+                            this.upList.shift()
+                        }
+
+                        if (this.upList.length === 0) {
+                            this.direction = 'down';
+                        }
+                    } else if (this.direction === 'down') {
+                        const nextFloor = this.downList[0];
+                        if (this.currentFloor > nextFloor) {
+                            this.currentFloor--;
+                        }
+
+                        if (this.currentFloor === nextFloor) {
+                            this.downList.shift()
+                        }
+
+                        if (this.downList.length === 0) {
+                            this.direction = 'up';
+                        }
+                    }
+                }
+                this.updateStatus()
+
+            }
+        }
+
+        class ElevatorSystem {
+            constructor() {
+                this.elevators = [new Elevator(1), new Elevator(2)];
+            }
+
+            findBestElevator(requestedFloor, direction) {
+                let bestElevator = null;
+                let minDistance = Infinity;
+
+                for (let elevator of this.elevators) {
+                    let distance = Math.abs(elevator.currentFloor - requestedFloor);
+
+                    if (elevator.status === 'idle') {
+                        if (distance <= minDistance) {
+                            minDistance = distance;
+                            bestElevator = elevator;
+                        }
+                    } else if (elevator.direction === direction) {
+                        if (elevator.direction === 'up' && requestedFloor >= elevator.currentFloor) {
+                            if (distance < minDistance) {
+                                minDistance = distance;
+                                bestElevator = elevator;
+                            }
+                        } else if (elevator.direction === 'down' && requestedFloor <= elevator.currentFloor) {
+                            if (distance < minDistance) {
+                                minDistance = distance;
+                                bestElevator = elevator;
+                            }
+                        }
+                    }
+                }
+
+                if (!bestElevator) {
+                    for (let elevator of this.elevators) {
+                        let distance = Math.abs(elevator.currentFloor - requestedFloor);
+                        if (distance < minDistance) {
+                            minDistance = distance;
+                            bestElevator = elevator;
+                        }
+                    }
+                }
+
+                return bestElevator;
+            }
+
+            requestElevator(requestedFloor, direction) {
+                let bestElevator = this.findBestElevator(requestedFloor, direction);
+                if (bestElevator) {
+                    bestElevator.addRequest(requestedFloor, direction);
+                }
+            }
+
+            makeInternalRequest(id, requestedFloor) {
+                let elevator = this.elevators[id]
+
+                if ((elevator.currentFloor - requestedFloor) > 0) {
+                    elevator.addRequest(requestedFloor, 'down')
+                } else {
+                    elevator.addRequest(requestedFloor, 'up')
+                }
+            }
+
+            step() {
+                this.elevators.forEach(elevator => elevator.move());
+            }
+        }
+
+        // Front-end Implementation
+
+        let system = new ElevatorSystem();
+        let floors = document.getElementsByClassName('floor')
+        let totalFloors = 5
+
+        function reset() {
+            let elevators = system.elevators
+            for (let floor of floors) {
+                floor.getElementsByClassName('left-elevator')[0].classList.remove('elevator-background')
+                floor.getElementsByClassName('right-elevator')[0].classList.remove('elevator-background')
+                floor.getElementsByClassName('left-elevator')[0].parentElement.firstElementChild.innerHTML = ''
+                floor.getElementsByClassName('right-elevator')[0].parentElement.lastElementChild.innerHTML = ''
+
+                // floor.getElementsByClassName('up-button')[0].classList.remove('button-green-bg')
+                // floor.getElementsByClassName('down-button')[0].classList.remove('button-green-bg')
+            }
+        }
+
+        function listRefresh() {
+            let elevators = system.elevators
+            floors[totalFloors - elevators[0].currentFloor].getElementsByClassName('left-elevator')[0].parentElement.firstElementChild.innerHTML = elevators[0].upList.length > 0 || elevators[0].downList.length > 0 ? `upList: [${elevators[0].upList}] <br> downList: [${elevators[0].downList}]` : `Idle`
+            floors[totalFloors - elevators[1].currentFloor].getElementsByClassName('right-elevator')[0].parentElement.lastElementChild.innerHTML = elevators[1].upList.length > 0 || elevators[1].downList.length > 0 ? `upList: [${elevators[1].upList}] <br> downList: [${elevators[1].downList}]` : `Idle`
+        }
+
+        function requestElevator(e) {
+            let [floor, direction] = e.id.split('-')
+            system.requestElevator(Number(floor), direction)
+            // console.log(floor, direction)
+            listRefresh()
+            // setButtonColor()
+        }
+
+        function setButtonColor() {
+            let elevators = system.elevators
+            elevators[0].upList.map(val => {
+                console.log(val)
+                document.getElementById(`${val}-up`).classList.add('button-green-bg')
+            })
+            elevators[0].downList.map(val => {
+                console.log(val)
+                document.getElementById(`${val}-down`).classList.add('button-green-bg')
+            })
+
+            elevators[1].upList.map(val => {
+                console.log(val)
+                document.getElementById(`${val}-up`).classList.add('button-green-bg')
+            })
+            elevators[1].downList.map(val => {
+                console.log(val)
+                document.getElementById(`${val}-down`).classList.add('button-green-bg')
+            })
+        }
+
+        function pressFloorButton(id, floor) {
+            system.makeInternalRequest(id, floor)
+            listRefresh()
+        }
+
+        function refresh() {
+            reset()
+            let elevators = system.elevators
+            floors[totalFloors - elevators[0].currentFloor].getElementsByClassName('left-elevator')[0].classList.add('elevator-background')
+            floors[totalFloors - elevators[1].currentFloor].getElementsByClassName('right-elevator')[0].classList.add('elevator-background')
+            document.getElementsByClassName('left-elevator-controller-text')[0].innerHTML = elevators[0].currentFloor
+            document.getElementsByClassName('right-elevator-controller-text')[0].innerHTML = elevators[1].currentFloor
+            listRefresh()
+            // setButtonColor() 
+        }
+
+        refresh()
+        setInterval(() => {
+            system.step();
+            refresh()
+        }, 1000);
+    </script>
+</body>
+
+</html>
